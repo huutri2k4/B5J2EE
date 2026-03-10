@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{_layout}">
+<head>
+    <title>Thêm sản phẩm mới</title>
+</head>
+<body>
+<div layout:fragment="content" class="d-flex justify-content-center">
+
+    <div class="card shadow-sm w-50">
+        <div class="card-header bg-primary text-white text-center py-3">
+            <h4 class="mb-0 fw-bold">THÊM SẢN PHẨM MỚI</h4>
+        </div>
+        <div class="card-body p-4">
+            <form th:action="@{/products/save}" th:object="${product}" method="post">
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">Tên sản phẩm:</label>
+                    <input type="text" th:field="*{name}" class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''" placeholder="Nhập tên..." />
+                    <div class="invalid-feedback fw-bold" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">Giá (VNĐ):</label>
+                    <input type="number" th:field="*{price}" class="form-control" th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''" placeholder="Ví dụ: 150000" />
+                    <div class="invalid-feedback fw-bold" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold text-secondary">Đường dẫn ảnh (URL):</label>
+                    <input type="text" th:field="*{image}" class="form-control" th:classappend="${#fields.hasErrors('image')} ? 'is-invalid' : ''" placeholder="https://link.com/anh.jpg" />
+                    <div class="invalid-feedback fw-bold" th:if="${#fields.hasErrors('image')}" th:errors="*{image}"></div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label fw-semibold text-secondary">Danh mục:</label>
+                    <select th:field="*{category.id}" class="form-select">
+                        <option th:each="c : ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                    </select>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success fw-bold py-2">LƯU SẢN PHẨM</button>
+                    <a th:href="@{/products}" class="btn btn-light border fw-bold text-muted">Hủy / Quay lại</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
